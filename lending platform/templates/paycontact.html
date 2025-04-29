@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FWL - Secure Payments</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f7;
+            color: #333;
+        }
+
+        .app-container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        .primary-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .primary-btn:hover {
+            background: #0056b3;
+        }
+
+        .secondary-btn {
+            background: #e9ecef;
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .secondary-btn:hover {
+            background: #ced4da;
+        }
+
+        .contact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .contact-list li {
+            background: #f8f9fa;
+            color: #333;
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .contact-list li:hover {
+            background: #e9ecef;
+        }
+
+        .pin-display {
+            font-size: 24px;
+            letter-spacing: 10px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .success-amount {
+            font-size: 40px;
+            font-weight: 600;
+            color: #007bff;
+            margin: 20px 0;
+        }
+
+        .success-contact {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff0;
+            border-radius: 50%;
+            animation: confetti 2s ease-out;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0);
+            }
+            100% {
+                transform: translateY(500px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .pin-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .pin-container button {
+            font-size: 20px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #f8f9fa;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .pin-container button:hover {
+            background: #e9ecef;
+        }
+
+        .forget-pin {
+            text-align: center;
+            margin-top: 10px;
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="logo">FYL <i class="fas fa-credit-card"></i></div>
+        </header>
+
+        <!-- Home Page -->
+        <section id="home" class="active">
+            <h3 class="text-center">Welcome to FYL</h3>
+            <p class="text-center text-muted">Secure payments made simple.</p>
+            <button id="payContactsBtn" class="primary-btn">Pay Contacts</button>
+        </section>
+
+        <!-- Contacts Page -->
+        <section id="contacts" style="display: none;">
+            <h4>Select a Contact</h4>
+            <input type="text" id="searchBox" class="form-control mb-3" placeholder="🔍 Search for a contact" onkeyup="searchContacts()">
+            <button class="primary-btn" id="pickContactBtn" onclick="pickContact()">📞 Pick from Contacts</button>
+            <ul id="contactResults" class="contact-list"></ul>
+            <div id="notFoundMessage" class="text-danger text-center" style="display: none;">Contact Not Found</div>
+            <button id="createContactBtn" class="primary-btn mt-2" style="display: none;" onclick="navigateTo('createContact')">Create New Contact</button>
+            <button class="secondary-btn mt-2" onclick="navigateTo('home')">Back</button>
+        </section>
+
+        <!-- Payment Page -->
+        <section id="payment" style="display: none;">
+            <h4>Send Money</h4>
+            <div class="contact-info text-center">
+                <p id="selectedContact" class="text-muted"></p>
+            </div>
+            <input type="number" id="paymentAmount" class="form-control mb-3" placeholder="Enter Amount ₹">
+            <button class="primary-btn" id="confirmPaymentBtn" onclick="navigateTo('pinVerification')">Send</button>
+            <button class="secondary-btn mt-2" onclick="navigateTo('contacts')">Cancel</button>
+        </section>
+
+        <!-- PIN Verification Page -->
+        <section id="pinVerification" style="display: none;">
+            <h4>Enter PIN</h4>
+            <div class="pin-display text-center" id="pinDisplay">••••</div>
+            <div class="pin-container">
+                <button onclick="addPin('1')">1</button>
+                <button onclick="addPin('2')">2</button>
+                <button onclick="addPin('3')">3</button>
+                <button onclick="addPin('4')">4</button>
+                <button onclick="addPin('5')">5</button>
+                <button onclick="addPin('6')">6</button>
+                <button onclick="addPin('7')">7</button>
+                <button onclick="addPin('8')">8</button>
+                <button onclick="addPin('9')">9</button>
+                <button onclick="resetPin()">Reset</button>
+                <button onclick="addPin('0')">0</button>
+                <button onclick="verifyPin()">✔️</button>
+            </div>
+            <div id="pinError" class="text-danger text-center mt-2" style="display: none;">Incorrect PIN. Try again.</div>
+            <div class="forget-pin" onclick="resetUserPin()">Forgot PIN?</div>
+            <button class="secondary-btn mt-3" onclick="navigateTo('payment')">Back</button>
+        </section>
+
+        <!-- Success Message -->
+        <section id="success" style="display: none;">
+            <h4 class="text-center">Payment Successful</h4>
+            <div class="success-amount text-center" id="successAmount"></div>
+            <div class="success-contact text-center" id="successContact"></div>
+            <button class="primary-btn mt-3" onclick="navigateTo('home')">Go to Home</button>
+        </section>
+
+        <!-- Create New Contact Page -->
+        <section id="createContact" style="display: none;">
+            <h4>Create New Contact</h4>
+            <input type="text" id="newContactName" class="form-control mb-3" placeholder="Enter Name">
+            <input type="text" id="newContactNumber" class="form-control mb-3" placeholder="Enter Phone Number">
+            <button class="primary-btn" onclick="saveContact()">Save</button>
+            <button class="secondary-btn mt-2" onclick="navigateTo('contacts')">Cancel</button>
+        </section>
+    </div>
+
+    <script>
+        const contacts = [
+            { name: 'Alice Johnson', phone: '9876543210' },
+            { name: 'Bob Williams', phone: '1234567890' },
+            { name: 'Charlie Brown', phone: '1122334455' }
+        ];
+        let selectedContact = null;
+        let enteredPin = '';
+        let correctPin = '1234'; // Default PIN
+        let paymentAmount = 0;
+
+        // Wait for DOM to load
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("payContactsBtn").addEventListener("click", () => navigateTo("contacts"));
+            loadContacts();
+        });
+
+        // Function to navigate between sections
+        function navigateTo(section) {
+            document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+            document.getElementById(section).style.display = "block";
+
+            if (section === "contacts") {
+                loadContacts();
+            } else if (section === "pinVerification") {
+                resetPin();
+            } else if (section === "success") {
+                document.getElementById("successAmount").innerText = `₹${paymentAmount}`;
+                document.getElementById("successContact").innerText = `Sent to: ${selectedContact.name}`;
+            }
+        }
+
+        // Function to load contacts dynamically
+        function loadContacts() {
+            const contactResults = document.getElementById("contactResults");
+            contactResults.innerHTML = "";
+
+            contacts.forEach(contact => {
+                let listItem = document.createElement("li");
+                listItem.innerHTML = `${contact.name} <span>${contact.phone}</span>`;
+                listItem.onclick = () => selectContact(contact);
+                contactResults.appendChild(listItem);
+            });
+        }
+
+        // Function to search contacts by name or phone number
+        function searchContacts() {
+            const searchQuery = document.getElementById("searchBox").value.toLowerCase();
+            const contactResults = document.getElementById("contactResults");
+            const notFoundMessage = document.getElementById("notFoundMessage");
+            const createContactBtn = document.getElementById("createContactBtn");
+
+            contactResults.innerHTML = "";
+            let found = false;
+
+            contacts.forEach(contact => {
+                if (
+                    contact.name.toLowerCase().includes(searchQuery) ||
+                    contact.phone.includes(searchQuery)
+                ) {
+                    found = true;
+                    let listItem = document.createElement("li");
+                    listItem.innerHTML = `${contact.name} <span>${contact.phone}</span>`;
+                    listItem.onclick = () => selectContact(contact);
+                    contactResults.appendChild(listItem);
+                }
+            });
+
+            if (!found) {
+                notFoundMessage.style.display = "block";
+                createContactBtn.style.display = "block";
+            } else {
+                notFoundMessage.style.display = "none";
+                createContactBtn.style.display = "none";
+            }
+        }
+
+        // Function to select a contact and navigate to payment page
+        function selectContact(contact) {
+            selectedContact = contact;
+            document.getElementById("selectedContact").innerText = `Paying: ${contact.name} (${contact.phone})`;
+            navigateTo("payment");
+        }
+
+        // Function to pick a contact from the device's contact list
+        function pickContact() {
+            if (!navigator.contacts || !navigator.contacts.select) {
+                alert("Your browser doesn't support contact access.");
+                return;
+            }
+
+            navigator.contacts.select(["name", "tel"], { multiple: false })
+                .then(contacts => {
+                    if (contacts.length > 0) {
+                        const contact = contacts[0];
+                        const contactName = contact.name[0] || "Unknown";
+                        const contactPhone = contact.tel[0] || "No Number";
+                        selectContact({ name: contactName, phone: contactPhone });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error accessing contacts:", error);
+                });
+        }
+
+        // Function to save a new contact
+        function saveContact() {
+            const name = document.getElementById("newContactName").value;
+            const phone = document.getElementById("newContactNumber").value;
+
+            if (name && phone) {
+                contacts.push({ name, phone });
+                navigateTo("contacts");
+                document.getElementById("newContactName").value = "";
+                document.getElementById("newContactNumber").value = "";
+            } else {
+                alert("Please enter both name and phone number.");
+            }
+        }
+
+        // Function to add a digit to the PIN
+        function addPin(digit) {
+            if (enteredPin.length < 4) {
+                enteredPin += digit;
+                updatePinDisplay();
+            }
+        }
+
+        // Function to reset the PIN
+        function resetPin() {
+            enteredPin = '';
+            updatePinDisplay();
+            document.getElementById("pinError").style.display = "none";
+        }
+
+        // Function to update the PIN display
+        function updatePinDisplay() {
+            const pinDisplay = document.getElementById("pinDisplay");
+            pinDisplay.innerText = '•'.repeat(enteredPin.length);
+        }
+
+        // Function to verify the PIN
+        function verifyPin() {
+            if (enteredPin === correctPin) {
+                paymentAmount = document.getElementById("paymentAmount").value;
+                navigateTo("success");
+                createConfetti();
+            } else {
+                document.getElementById("pinError").style.display = "block";
+            }
+        }
+
+        // Function to reset user PIN
+        function resetUserPin() {
+            const newPin = prompt("Enter a new 4-digit PIN:");
+            if (newPin && newPin.length === 4 && !isNaN(newPin)) {
+                correctPin = newPin;
+                alert("Your PIN has been updated successfully.");
+                resetPin();
+            } else {
+                alert("Please enter a valid 4-digit PIN.");
+            }
+        }
+
+        // Function to create confetti effect
+        function createConfetti() {
+            const container = document.querySelector(".app-container");
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                container.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2000);
+            }
+        }
+    </script>
+</body>
+</html>

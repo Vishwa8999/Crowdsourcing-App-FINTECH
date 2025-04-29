@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FWL - New Transaction</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    
+    body {
+      background-color: #0a192f; /* Dark blue background */
+      color: white;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #112240; /* Darker blue container */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      padding: 20px;
+    }
+    
+    .form-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .form-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #64ffda; /* Teal accent color */
+    }
+    
+    .form-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .form-tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      color: #ccd6f6; /* Light blue text */
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .form-tab.active {
+      border-bottom: 2px solid #64ffda; /* Teal accent color */
+      color: #64ffda; /* Teal accent color */
+    }
+    
+    .form-tab:hover {
+      color: #64ffda; /* Teal accent color */
+    }
+    
+    .form-content {
+      display: none;
+    }
+    
+    .form-content.active {
+      display: block;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #8892b0; /* Lighter gray text */
+      font-size: 14px;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #1f4068; /* Darker blue border */
+      border-radius: 4px;
+      font-size: 14px;
+      background-color: #0a192f; /* Dark blue input */
+      color: #ccd6f6; /* Light blue text */
+    }
+    
+    .form-control:focus {
+      border-color: #64ffda; /* Teal accent color */
+      outline: none;
+    }
+    
+    .form-actions {
+      text-align: right;
+      margin-top: 20px;
+    }
+    
+    .btn-submit {
+      background-color: #64ffda; /* Teal accent color */
+      color: #0a192f; /* Dark blue text */
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .btn-submit:hover {
+      background-color: #52d1b2; /* Slightly darker teal on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-header">
+      <h1 class="form-title">New Transaction</h1>
+    </div>
+    
+    <!-- Tabs for Lending and Borrowing -->
+    <div class="form-tabs">
+      <div class="form-tab active" data-tab="lending">Lending</div>
+      <div class="form-tab" data-tab="borrowing">Borrowing</div>
+    </div>
+    
+    <!-- Lending Form -->
+    <div class="form-content active" id="lending">
+      <div class="form-group">
+        <label for="lending-amount">Amount</label>
+        <input type="text" id="lending-amount" class="form-control" placeholder="Enter amount">
+      </div>
+      
+      <div class="form-group">
+        <label for="lending-duration">Duration (Months)</label>
+        <input type="text" id="lending-duration" class="form-control" placeholder="Enter duration">
+      </div>
+      
+      <div class="form-group">
+        <label for="lending-interest">Interest Rate (%)</label>
+        <input type="text" id="lending-interest" class="form-control" placeholder="Enter interest rate">
+      </div>
+      
+      <div class="form-group">
+        <label for="lending-borrower">Borrower's Name</label>
+        <input type="text" id="lending-borrower" class="form-control" placeholder="Enter borrower's name">
+      </div>
+      
+      <div class="form-group">
+        <label for="lending-purpose">Purpose</label>
+        <textarea id="lending-purpose" class="form-control" rows="3" placeholder="Enter purpose"></textarea>
+      </div>
+    </div>
+    
+    <!-- Borrowing Form -->
+    <div class="form-content" id="borrowing">
+      <div class="form-group">
+        <label for="borrowing-amount">Amount</label>
+        <input type="text" id="borrowing-amount" class="form-control" placeholder="Enter amount">
+      </div>
+      
+      <div class="form-group">
+        <label for="borrowing-duration">Duration (Months)</label>
+        <input type="text" id="borrowing-duration" class="form-control" placeholder="Enter duration">
+      </div>
+      
+      <div class="form-group">
+        <label for="borrowing-interest">Interest Rate (%)</label>
+        <input type="text" id="borrowing-interest" class="form-control" placeholder="Enter interest rate">
+      </div>
+      
+      <div class="form-group">
+        <label for="borrowing-lender">Lender's Name</label>
+        <input type="text" id="borrowing-lender" class="form-control" placeholder="Enter lender's name">
+      </div>
+      
+      <div class="form-group">
+        <label for="borrowing-purpose">Purpose</label>
+        <textarea id="borrowing-purpose" class="form-control" rows="3" placeholder="Enter purpose"></textarea>
+      </div>
+    </div>
+    
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button class="btn-submit">Submit</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabs = document.querySelectorAll('.form-tab');
+      const forms = document.querySelectorAll('.form-content');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          // Remove active class from all tabs and forms
+          tabs.forEach(t => t.classList.remove('active'));
+          forms.forEach(f => f.classList.remove('active'));
+
+          // Add active class to the clicked tab and corresponding form
+          this.classList.add('active');
+          const targetTab = this.getAttribute('data-tab');
+          document.getElementById(targetTab).classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

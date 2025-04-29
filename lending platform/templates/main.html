@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LendPay - Modern Lending Platform</title>
+    <link rel="stylesheet" href="C:\Users\nikhi\Desktop\model for lending\static\index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <span>FWL</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link">Home</a></li>
+                        <li><a href="#" class="nav-link">About</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="C:\Users\nikhi\Desktop\model for lending\index.html">
+                        <button class="btn-primary">Sign Up</button>
+                    </a>
+                    <a href="C:\Users\nikhi\Desktop\model for lending\templates\profile.html">
+                        <button class="btn-primary">profile</button>
+                    </a>
+                </div>
+                <div class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">Smart Lending <span class="highlight">Simplified</span></h1>
+                    <p class="hero-subtitle">Secure, fast, and transparent financial solutions at your fingertips</p>
+                    <div class="hero-cta">
+                        <button class="btn-primary btn-large">Get Started</button>
+                        <button class="btn-outline btn-large">Learn More</button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="card-visual card-1">
+                        <div class="card-chip"></div>
+                        <div class="card-number">•••• •••• •••• 4242</div>
+                        <div class="card-name">JOHN DOE</div>
+                        <div class="card-expiry">05/28</div>
+                    </div>
+                    <div class="card-visual card-2">
+                        <div class="card-chip"></div>
+                        <div class="card-number">•••• •••• •••• 8752</div>
+                        <div class="card-name">JANE SMITH</div>
+                        <div class="card-expiry">11/26</div>
+                    </div>
+                    <div class="floating-elements">
+                        <div class="float-element dollar"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="float-element percent"><i class="fas fa-percentage"></i></div>
+                        <div class="float-element chart"><i class="fas fa-chart-line"></i></div>
+                        <div class="float-element shield"><i class="fas fa-shield-alt"></i></div>
+                    </div>
+                </div>
+                <div class="hero-bg">
+                    <div class="bg-circle circle-1"></div>
+                    <div class="bg-circle circle-2"></div>
+                    <div class="bg-circle circle-3"></div>
+                </div>
+            </section>
+<!-- icon sectionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn -->
+<section class="payment-options">
+    <div class="section-header">
+        <h2>Payment <span class="highlight">Options</span></h2>
+        <p>Convenient ways to manage your transactions</p>
+    </div>
+    <div class="options-container">
+        <div class="option-card">
+            <img src="C:\Users\nikhi\Desktop\model for lending\static\images\qr.png" alt="Pay contacts">
+
+            <p>Scan any QR code</p>
+        </div>
+        <div class="option-card">
+            <a href="paycontact.html">
+            <img src="C:\Users\nikhi\Desktop\model for lending\static/images/coontact.jpg" alt="Pay contacts">
+            </a>
+            <p>Pay contacts</p>
+        </div>
+        <div class="option-card">
+            <a href="cibil.html">
+            <img src="C:\Users\nikhi\Desktop\model for lending\static/images/cibil.png" alt="Pay contacts">
+
+            <p>Cibil Score</p>
+        </div>
+        <div class="option-card">
+            <img src="C:\Users\nikhi\Desktop\model for lending\static/images/bank transfer.jpg" alt="Pay contacts">
+
+            <p>Bank transfer</p>
+        </div>
+        <div class="option-card">
+            <a href="crowd.html">
+                <img src="C:\Users\nikhi\Desktop\model for lending\static/images/people.png" alt="Pay contacts">
+
+            </a>
+            <p>Crowd funding</p>
+        </div>
+        <div class="option-card">
+            <a href="lenders.html">
+            <img src="C:\Users\nikhi\Desktop\model for lending\static/images/payment.png" alt="Pay contacts">
+            </a>
+
+            <p>Lending a money</p>
+        </div>
+        <div class="option-card">
+            <a href="borrowes.html">
+            <img src="C:\Users\nikhi\Desktop\model for lending\static/images/borrow.png" alt="Pay contacts">
+            </a>
+
+            <p>Borrow a money</p>
+        </div>
+        <div class="option-card">
+            <a href="kyc.html">
+
+              <img src="C:\Users\nikhi\Desktop\model for lending\static/images/kyc.png" alt="Pay contacts">
+
+            </a>
+            
+            <p>KYC</p>
+        </div>
+    </div>
+    <div class="footer-section">
+        <button class="upi-lite">Activate UPI Lite</button>
+        <div class="upi-id">UPI ID: xxxyyyzzzz@oksbi</div>
+    </div>
+</section>
+<!-- loan calciiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii -->
+            <section class="loan-calculator">
+                <div class="section-header">
+                    <h2>Loan <span class="highlight">Calculator</span></h2>
+                    <p>Plan your finances with our easy-to-use calculator</p>
+                </div>
+                <div class="calculator-container">
+                    <div class="calculator-card">
+                        <div class="calculator-inputs">
+                            <div class="input-group">
+                                <label for="loan-amount">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    Loan Amount
+                                </label>
+                                <div class="slider-container">
+                                    <input type="range" id="loan-amount" min="1000" max="100000" step="1000" value="25000">
+                                    <div class="slider-value" id="amount-value">$25,000</div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label for="loan-term">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Loan Term (months)
+                                </label>
+                                <div class="slider-container">
+                                    <input type="range" id="loan-term" min="6" max="60" step="6" value="36">
+                                    <div class="slider-value" id="term-value">36 months</div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label for="interest-rate">
+                                    <i class="fas fa-percentage"></i>
+                                    Interest Rate
+                                </label>
+                                <div class="slider-container">
+                                    <input type="range" id="interest-rate" min="2" max="20" step="0.5" value="5">
+                                    <div class="slider-value" id="rate-value">5.0%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="calculator-results">
+                            <div class="result-item">
+                                <div class="result-label">Monthly Payment</div>
+                                <div class="result-value" id="monthly-payment">₹750.72</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">Total Interest</div>
+                                <div class="result-value" id="total-interest">₹2,025.92</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">Total Payment</div>
+                                <div class="result-value" id="total-payment">₹27,025.92</div>
+                            </div>
+                            <button class="btn-primary btn-apply">Apply Now</button>
+                        </div>
+                    </div>
+                    <div class="calculator-visual">
+                        <canvas id="loan-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="loan-options">
+                <div class="section-header">
+                    <h2>Loan <span class="highlight">Options</span></h2>
+                    <p>Find the perfect loan solution for your needs</p>
+                </div>
+                <div class="options-slider">
+                    <div class="option-card">
+                        <div class="option-header">
+                            <div class="option-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h3>Home Loans</h3>
+                        </div>
+                        <div class="option-details">
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Rates from 3.5% APR</span>
+                            </div>
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Up to 30 years term</span>
+                            </div>
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Fast approval process</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary">Learn More</button>
+                    </div>
+                    <div class="option-card">
+                        <div class="option-header">
+                            <div class="option-icon">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <h3>Auto Loans</h3>
+                        </div>
+                        <div class="option-details">
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Rates from 4.2% APR</span>
+                            </div>
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Up to 7 years term</span>
+                            </div>
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>No prepayment penalties</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary">Learn More</button>
+                    </div>
+                    <div class="option-card">
+                        <div class="option-header">
+                            <div class="option-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3>Education Loans</h3>
+                        </div>
+                        <div class="option-details">
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Rates from 3.8% APR</span>
+                            </div>
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Flexible repayment options</span>
+                            </div>
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Grace period after graduation</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary">Learn More</button>
+                    </div>
+                    <div class="option-card">
+                        <div class="option-header">
+                            <div class="option-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <h3>Business Loans</h3>
+                        </div>
+                        <div class="option-details">
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Rates from 5.0% APR</span>
+                            </div>
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Funding up to ₹500,000</span>
+                            </div>
+                            <div class="option-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Tailored repayment schedules</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary">Learn More</button>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <div class="slider-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            
+            <section class="features-section">
+                <div class="section-header">
+                    <h2>Why Choose <span class="highlight">LendPay</span></h2>
+                    <p>Experience the future of lending with our innovative platform</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card" data-tilt>
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Instant Approval</h3>
+                        <p>Get loan approvals in minutes, not days, with our AI-powered system</p>
+                    </div>
+                    <div class="feature-card" data-tilt>
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>Secure Platform</h3>
+                        <p>Bank-level encryption and security protocols to protect your data</p>
+                    </div>
+                    <div class="feature-card" data-tilt>
+                        <div class="feature-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3>Competitive Rates</h3>
+                        <p>Enjoy some of the lowest interest rates available in the market</p>
+                    </div>
+                    <div class="feature-card" data-tilt>
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Mobile First</h3>
+                        <p>Manage your loans anytime, anywhere with our intuitive mobile experience</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="testimonials">
+                <div class="section-header">
+                    <h2>What Our <span class="highlight">Customers</span> Say</h2>
+                    <p>Join thousands of satisfied customers who trust LendPay</p>
+                </div>
+                <div class="testimonial-container">
+                    <div class="testimonial-card active">
+                        <div class="testimonial-avatar">
+                            <img src="C:\Users\nikhi\Desktop\model for lending\static\images\sir photo.jpg" alt="Pay contacts">
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"The loan process was incredibly smooth. I got approved within hours and had the funds in my account the next day. Highly recommend LendPay!"</p>
+                            <div class="testimonial-author">Venkat</div>
+                            <div class="testimonial-position">Small Business Owner</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </section>
+
+            <section class="cta-section">
+                <div class="cta-content">
+                    <h2>Ready to Get Started?</h2>
+                    <p>Join thousands of satisfied customers who have transformed their financial future with LendPay</p>
+                    <button class="btn-primary btn-large">Apply Now</button>
+                </div>
+                <div class="cta-visual">
+                    <div class="floating-device">
+                        <div class="device-screen">
+                            <div class="screen-content">
+                                <div class="screen-header"></div>
+                                <div class="screen-body">
+                                    <div class="screen-item"></div>
+                                    <div class="screen-item"></div>
+                                    <div class="screen-item"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <span>FWL
+                    </div>
+                    <p>Modern lending solutions for the digital age</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Products</h3>
+                        
+                        <ul>
+                            <li><a href="#">Personal Loans</a></li>
+                            <li><a href="#">Home Loans</a></li>
+                            <li><a href="#">Auto Loans</a></li>
+                            <li><a href="#">Business Loans</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Loan Calculator</a></li>
+                            <li><a href="#">Rate Checker</a></li>
+                            <li><a href="#">FAQs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Legal</h3>
+                        <ul>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                            <li><a href="#">Licenses</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2025 LendPay. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+    <script src="C:\Users\nikhi\Desktop\model for lending\static\index.js"></script>
+
+</body>
+</html>

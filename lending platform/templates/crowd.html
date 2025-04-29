@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FundTogether - Make a Difference Today</title>
+    <link rel="stylesheet" href="../styles/crowd.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-hand-holding-heart"></i>
+            <h1>FWL</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="main.html" class="active">Home</a></li>
+                <li><a href="donate.html">Donate</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+    <section class="hero">
+      <div class="hero-image">
+          <!-- Hero image with colorful crowd -->
+          <div class="overlay"></div>
+          <button class="cta-button animate-pulse">Explore Featured Causes</button>
+      </div>
+  </section>
+  
+<section class="about-us">
+    <div class="about-content">
+        <h2>About FundTogether</h2>
+        <p>FundTogether is a platform dedicated to connecting people with causes that matter. Together, we can make a difference in the world by supporting community-driven initiatives and charitable projects.</p>
+        <a href="about.html" class="learn-more-button">Learn More</a>
+    </div>
+</section>
+    <section class="featured-causes">
+        <div class="cause-card" data-aos="fade-up">
+            <div class="cause-image">
+                <img src="../assets/images/playground.png" alt="Community Playground">
+            </div>
+            <h3>Community Playground</h3>
+            <p>Help us build a safe and fun playground for the children in our community.</p>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" style="width: 65%"></div>
+                </div>
+            </div>
+            <a href="donate.html" >
+              <button class="action-button">DONATE</button>
+            </a>
+        </div>
+
+        <div class="cause-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="cause-image">
+                <img src="../assets/images/food.png" alt="Food For All">
+            </div>
+            <h3>Food For All</h3>
+            <p>Join us in our mission to provide meals to those in need.</p>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" style="width: 45%"></div>
+                </div>
+            </div>
+            <a href="donate.html" >
+              <button class="action-button">DONATE</button>
+            </a>
+        </div>
+
+        <div class="cause-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="cause-image">
+                <img src="../assets/images/forest.png" alt="Reforest Our Planet">
+            </div>
+            <h3>Reforest Our Planet</h3>
+            <p>Support our efforts to plant trees and restore natural habitats.</p>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" style="width: 80%"></div>
+                </div>
+            </div>
+            <a href="donate.html" >
+            <button class="action-button">DONATE</button>
+          </a>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login to FundTogether</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="primary-button">Login</button>
+                <p>Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
+            </form>
+            <form id="signupForm" style="display: none;">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <button type="submit" class="primary-button">Sign Up</button>
+                <p>Already have an account? <a href="#" id="loginLink">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 FundTogether. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="../scripts/crowd.js"></script>
+</body>
+</html>

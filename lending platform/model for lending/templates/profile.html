@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fintech Profile Settings</title>
+    <style>
+        :root {
+            --primary: #0066FF;
+            --primary-light: #4D94FF;
+            --primary-dark: #0047B3;
+            --success: #36B37E;
+            --warning: #FFAB00;
+            --danger: #FF5630;
+            --dark: #172B4D;
+            --gray: #8993A4;
+            --light-gray: #DFE1E6;
+            --lighter-gray: #F4F5F7;
+            --white: #FFFFFF;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--lighter-gray);
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            --primary: #3385FF;
+            --primary-light: #4D94FF;
+            --primary-dark: #0047B3;
+            --lighter-gray: #1A1D21;
+            --light-gray: #2C3137;
+            --dark: #E9EAEC;
+            --gray: #8993A4;
+            --white: #2C3137;
+            background-color: #121416;
+            color: #E9EAEC;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .main-content {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--light-gray);
+            padding-bottom: 16px;
+        }
+
+        .page-title-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .avatar-edit {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 24px;
+            height: 24px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .theme-toggle {
+            padding: 8px 16px;
+            background-color: var(--lighter-gray);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .edit-button {
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 576px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--light-gray);
+            background-color: var(--lighter-gray);
+            font-size: 14px;
+            transition: all 0.2s ease;
+            color: var(--dark);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+        }
+
+        .form-control:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .form-action {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--light-gray);
+            color: var(--dark);
+            margin-right: 12px;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--lighter-gray);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .toggle-label {
+            font-weight: 500;
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--light-gray);
+            border-radius: 26px;
+            transition: .4s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: .4s;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .section-content {
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 24px;
+        }
+
+        /* Tabs styles */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 24px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab {
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Tab content area */
+        #tabContent > div {
+            display: none;
+        }
+
+        #tabContent > div.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .theme-toggle {
+                margin-top: 16px;
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="page-header">
+                <div class="page-title-container">
+                    <div class="profile-avatar">
+                        JS
+                        <div class="avatar-edit">+</div>
+                    </div>
+                    <div class="user-info">
+                        <h1 class="page-title">Profile Settings</h1>
+                        <div class="profile-email">john.smith@example.com</div>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    🌙 Dark Mode
+                </button>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" data-tab="personal">Personal Information</div>
+                <div class="tab" data-tab="security">Account Security</div>
+                <div class="tab" data-tab="payment">Payment Methods</div>
+                <div class="tab" data-tab="notifications">Notifications</div>
+                <div class="tab" data-tab="privacy">Privacy</div>
+            </div>
+
+            <div id="tabContent">
+                <!-- Personal Information Tab -->
+                <div class="tab-pane active" id="personal">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Basic Information</h2>
+                            <button class="edit-button" id="editBasicInfo">Edit</button>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" value="John" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" value="Smith" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" value="john.smith@example.com" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" value="+1 (555) 123-4567" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control" value="1990-05-15" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Country</label>
+                                    <input type="text" class="form-control" value="United States" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Address Information</h2>
+                            <button class="edit-button" id="editAddressInfo">Edit</button>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label class="form-label">Street Address</label>
+                                <input type="text" class="form-control" value="123 Main Street, Apt 4B" disabled>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" value="New York" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">State</label>
+                                    <input type="text" class="form-control" value="NY" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Postal Code</label>
+                                    <input type="text" class="form-control" value="10001" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Country</label>
+                                    <input type="text" class="form-control" value="United States" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Employment Information</h2>
+                            <button class="edit-button" id="editEmploymentInfo">Edit</button>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Employment Status</label>
+                                    <input type="text" class="form-control" value="Employed" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Job Title</label>
+                                    <input type="text" class="form-control" value="Senior Software Engineer" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Employer Name</label>
+                                    <input type="text" class="form-control" value="Tech Solutions Inc." disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Annual Income</label>
+                                    <input type="text" class="form-control" value="$120,000" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">Account Preferences</h2>
+                        </div>
+                        <div class="section-content">
+                            <div class="toggle-container">
+                                <span class="toggle-label">Language</span>
+                                <select class="form-control" style="width: 200px;">
+                                    <option selected>English (US)</option>
+                                    <option>Spanish</option>
+                                    <option>French</option>
+                                    <option>German</option>
+                                    <option>Chinese (Simplified)</option>
+                                </select>
+                            </div>
+                            <div class="toggle-container">
+                                <span class="toggle-label">Currency</span>
+                                <select class="form-control" style="width: 200px;">
+                                    <option selected>USD ($)</option>
+                                    <option>EUR (€)</option>
+                                    <option>GBP (£)</option>
+                                    <option>JPY (¥)</option>
+                                    <option>CAD ($)</option>
+                                </select>
+                            </div>
+                            <div class="toggle-container">
+                                <span class="toggle-label">Time Zone</span>
+                                <select class="form-control" style="width: 200px;">
+                                    <option selected>Eastern Time (ET)</option>
+                                    <option>Pacific Time (PT)</option>
+                                    <option>Central European Time (CET)</option>
+                                    <option>Japan Standard Time (JST)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional tabs would go here -->
+                <div class="tab-pane" id="security">
+                    <!-- Security tab content -->
+                </div>
+                <div class="tab-pane" id="payment">
+                    <!-- Payment tab content -->
+                </div>
+                <div class="tab-pane" id="notifications">
+                    <!-- Notifications tab content -->
+                </div>
+                <div class="tab-pane" id="privacy">
+                    <!-- Privacy tab content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
+            });
+        });
+
+        // Toggle dark mode
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').innerHTML = isDarkMode ? 
+                '☀ Light Mode' : '🌙 Dark Mode';
+        });
+    </script>
+</body>
+</html>

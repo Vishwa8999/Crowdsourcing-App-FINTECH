@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureBank - Login & Register</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background-color: #003B70;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: #003B70;
+            border-bottom: 2px solid #003B70;
+            font-weight: bold;
+        }
+        
+        .form-container {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            border-color: #003B70;
+            outline: none;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #003B70;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #002855;
+        }
+        
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .otp-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .otp-input {
+            width: 15%;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .verification-section {
+            display: none;
+        }
+        
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        #recaptcha-container {
+            margin: 15px 0;
+        }
+        
+        .resend-timer {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .terms {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        
+        #loader {
+            display: none;
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #003B70;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+                max-width: none;
+            }
+        }</style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>FWL</h1>
+            <p>Four. Way. Lending.</p>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" id="login-tab">Login</div>
+            <div class="tab" id="register-tab">Register</div>
+        </div>
+        
+        <div class="form-container">
+            <!-- Login Form -->
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn" id="login-btn">Login</button>
+                
+                <div class="terms">
+                    <p>Forgot password? <a href="#" id="forgot-password">Reset Now</a></p>
+                </div>
+            </form>
+            
+            <!-- Register Form -->
+            <form id="register-form" style="display: none;">
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-email">Email Address</label>
+                    <input type="email" id="register-email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-phone">Mobile Number</label>
+                    <input type="tel" id="register-phone" placeholder="Enter your mobile number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-password">Create Password</label>
+                    <input type="password" id="register-password" placeholder="Enter password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-confirm-password">Confirm Password</label>
+                    <input type="password" id="register-confirm-password" placeholder="Confirm password" required>
+                </div>
+                
+                <button type="submit" class="btn" id="register-btn">Register</button>
+                
+                <div class="terms">
+                    <p>By registering, you agree to our <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></p>
+                </div>
+            </form>
+            
+            <div id="loader">
+                <div class="spinner"></div>
+                <p>Processing...</p>
+            </div>
+            
+            <div class="message" id="message-box" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+  apiKey: "AIzaSyBTl1mnk3kTFysFtmzpXvbLjmcVMlzEkRU",
+  authDomain: "lending-app-559fa.firebaseapp.com",
+  databaseURL: "https://lending-app-559fa-default-rtdb.firebaseio.com",
+  projectId: "lending-app-559fa",
+  storageBucket: "lending-app-559fa.firebasestorage.app",
+  messagingSenderId: "13752692266",
+  appId: "1:13752692266:web:47efd0589f20850fa75d53",
+  measurementId: "G-MQSLBQDNS1"
+};
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const firestore = firebase.firestore();
+
+        // Get elements
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const messageBox = document.getElementById('message-box');
+        const loader = document.getElementById('loader');
+
+        // Tab switching
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            clearMessage();
+        });
+
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerForm.style.display = 'block';
+            loginForm.style.display = 'none';
+            clearMessage();
+        });
+
+        // Register form submission
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const phone = document.getElementById('register-phone').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+
+            clearMessage();
+
+            if (!isValidPhone(phone)) {
+                showMessage('Please enter a valid mobile number', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('Password must be at least 6 characters long', 'error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match', 'error');
+                return;
+            }
+
+            registerUser(name, email, phone, password);
+        });
+
+        // Login form submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            clearMessage();
+            loginUser(email, password);
+        });
+
+      // Register a new user
+function registerUser(name, email, phone, password) {
+    showLoader();
+
+    // Check if user with email already exists
+    firestore.collection('users')
+        .where('email', '==', email)
+        .get()
+        .then(snapshot => {
+            if (!snapshot.empty) {
+                hideLoader();
+                showMessage('An account with this email already exists', 'error');
+                return;
+            }
+
+            // Create user in Firebase Auth
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    const user = userCredential.user;
+
+                    // Store additional user data in Firestore
+                    return firestore.collection('users').doc(user.uid).set({
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp() // Use server timestamp
+                    });
+                })
+                .then(() => {
+                    hideLoader();
+                    showMessage('Registration successful! Redirecting to dashboard...', 'success');
+                    setTimeout(() => {
+                        alert('Registration successful! Redirecting to dashboard.');
+                         window.location.href = 'index.html';
+                    }, 2000);
+                })
+                .catch(error => {
+                    hideLoader();
+                    showMessage('Registration error: ' + getErrorMessage(error), 'error');
+                    console.error('Error during registration:', error);
+                });
+        })
+        .catch(error => {
+            hideLoader();
+            showMessage('Error checking existing user: ' + error.message, 'error');
+        });
+}
+
+        // Login existing user
+        function loginUser(email, password) {
+            showLoader();
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    const user = userCredential.user;
+                    
+                    hideLoader();
+                    showMessage('Login successful! Redirecting to dashboard...', 'success');
+                    setTimeout(() => {
+                        alert('Login successful! Redirecting to dashboard.');
+                         window.location.href = 'main.html';
+                    }, 2000);
+                })
+                .catch(error => {
+                    hideLoader();
+                    showMessage('Login error: ' + getErrorMessage(error), 'error');
+                    console.error('Error during login:', error);
+                });
+        }
+
+        // Utility: Show loader
+        function showLoader() {
+            loader.style.display = 'block';
+            document.getElementById('login-btn').disabled = true;
+            document.getElementById('register-btn').disabled = true;
+        }
+
+        // Utility: Hide loader
+        function hideLoader() {
+            loader.style.display = 'none';
+            document.getElementById('login-btn').disabled = false;
+            document.getElementById('register-btn').disabled = false;
+        }
+
+        // Utility: Show message to user
+        function showMessage(message, type) {
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+            messageBox.className = 'message ' + type;
+        }
+
+        // Utility: Clear message
+        function clearMessage() {
+            messageBox.style.display = 'none';
+            messageBox.textContent = '';
+        }
+
+        // Utility: Validate phone number (simple validation)
+        function isValidPhone(phone) {
+            return phone.length >= 10;
+        }
+
+        // Utility: Get error message from Firebase error
+        function getErrorMessage(error) {
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    return 'This email is already registered';
+                case 'auth/invalid-email':
+                    return 'Invalid email format';
+                case 'auth/weak-password':
+                    return 'Password is too weak';
+                case 'auth/user-not-found':
+                    return 'No account found with this email';
+                case 'auth/wrong-password':
+                    return 'Incorrect password';
+                case 'auth/too-many-requests':
+                    return 'Too many attempts. Try again later';
+                default:
+                    return error.message;
+            }
+        }
+
+        // Forgot password handler
+        document.getElementById('forgot-password').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            
+            if (!email) {
+                showMessage('Please enter your email address', 'error');
+                return;
+            }
+            
+            showLoader();
+            
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    hideLoader();
+                    showMessage('Password reset email sent. Check your inbox.', 'success');
+                })
+                .catch(error => {
+                    hideLoader();
+                    showMessage('Error: ' + getErrorMessage(error), 'error');
+                });
+        });
+
+      
+    </script>
+</body>
+</html>

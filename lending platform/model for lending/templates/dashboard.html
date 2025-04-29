@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FundTogether</title>
+    <link rel="stylesheet" href="C:\Users\nikhi\Desktop\model for lending\static\crowd.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-hand-holding-heart"></i>
+            <h1>FundTogether</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="crowd.html">Home</a></li>
+                <li><a href="donate.html">Donate</a></li>
+               
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="search-bar">
+            <input type="text" placeholder="Search for projects, proposals, or causes...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="dashboard-header">
+            <h2>Donate</h2>
+            <div class="header-buttons">
+                <button class="secondary-button">Donation history</button>
+                <button class="primary-button">Make donation</button>
+            </div>
+        </div>
+
+        <div class="metrics-container">
+            <div class="metric-card">
+                <h3>Total donations</h3>
+                <p class="metric-value count-up" id="totalDonations">$0</p>
+                <div class="card-footer">
+                    <p>Last updated today</p>
+                    <div class="card-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <h3>Total pledges</h3>
+                <p class="metric-value count-up" id="totalPledges">$0</p>
+                <div class="card-footer">
+                    <p>Last updated today</p>
+                    <div class="card-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="impact-section">
+            <h2>Impact Reports</h2>
+            <div class="impact-container">
+                <div class="impact-header">
+                    <div class="impact-tabs">
+                        <button class="tab-button active">Breakdown</button>
+                        <button class="tab-button">Contribution</button>
+                    </div>
+                    <button class="upgrade-button">UPGRADE PLAN</button>
+                </div>
+                
+                <div class="impact-content">
+                    <div class="impact-summary">
+                        <h3 class="negative-value count-up" id="impactValue">-$0</h3>
+                        <p id="avgMonthly">Avg. -$0 per month</p>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="impactChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-timeline">
+                        <p>23 May 2021 - 23 May 2022</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login to FundTogether</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="primary-button">Login</button>
+                <p>Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
+            </form>
+            <form id="signupForm" style="display: none;">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <button type="submit" class="primary-button">Sign Up</button>
+                <p>Already have an account? <a href="#" id="loginLink">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 FundTogether. All rights reserved.</p>
+    </footer>
+
+    <script src="firebase-config.js"></script>
+    <script src="C:\Users\nikhi\Desktop\model for lending\static\crowd.js"></script>
+    <script src="C:\Users\nikhi\Desktop\model for lending\static\dashboard.js"></script>
+</body>
+</html>

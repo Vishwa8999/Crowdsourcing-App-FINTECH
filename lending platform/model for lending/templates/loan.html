@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <style>:root {
+        --primary-color: #2c3e50;
+        --secondary-color: #3498db;
+        --accent-color: #27ae60;
+        --text-color: #333;
+        --light-bg: #f5f5f5;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        --transition-speed: 0.3s;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+        background-color: var(--light-bg);
+        color: var(--text-color);
+        padding: 20px;
+        line-height: 1.6;
+    }
+    
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 25px;
+        animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    h1 {
+        color: var(--primary-color);
+        text-align: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--secondary-color);
+        animation: fadeIn 1s ease-in;
+    }
+    
+    .calculator-nav {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+    
+    .calculator-nav button {
+        background-color: var(--secondary-color);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: all var(--transition-speed) ease;
+        white-space: nowrap;
+        font-weight: 500;
+    }
+    
+    .calculator-nav button:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .calculator-nav button.active {
+        background-color: var(--accent-color);
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .calculator-section {
+        display: none;
+        animation: fadeIn 0.5s ease-in;
+    }
+    
+    .calculator-section.active {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .input-group {
+        margin-bottom: 20px;
+        animation: fadeIn 0.5s ease-in;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+    
+    input, select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 16px;
+        transition: border-color var(--transition-speed) ease;
+    }
+    
+    input:focus, select:focus {
+        border-color: var(--secondary-color);
+        outline: none;
+        box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+    }
+    
+    button.calculate {
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+        padding: 14px 20px;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 15px;
+        transition: all var(--transition-speed) ease;
+    }
+    
+    button.calculate:hover {
+        background-color: #219653;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .result {
+        margin-top: 25px;
+        padding: 20px;
+        background-color: #f0f8ff;
+        border-radius: var(--border-radius);
+        border-left: 4px solid var(--accent-color);
+        animation: slideIn 0.5s ease-out;
+    }
+    
+    .result-title {
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: var(--primary-color);
+    }
+    
+    .result-value {
+        font-size: 28px;
+        color: var(--accent-color);
+        margin-bottom: 12px;
+        animation: popIn 0.5s ease-in;
+    }
+    
+    @keyframes popIn {
+        0% { transform: scale(0.9); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .result-details {
+        margin-top: 15px;
+        font-size: 14px;
+        color: #555;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        animation: fadeIn 0.5s ease-in;
+    }
+    
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+    
+    .chart-container {
+        margin-top: 25px;
+        height: 300px;
+        animation: fadeIn 0.5s ease-in;
+    }
+    
+    .helper-text {
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+    }
+    
+    @media (max-width: 600px) {
+        .container {
+            padding: 15px;
+        }
+        
+        h1 {
+            font-size: 24px;
+        }
+        
+        .calculator-nav {
+            flex-wrap: nowrap;
+        }
+    }</style>
+    <div class="container">
+        <h1>Finance Calculator</h1>
+        
+        <div class="calculator-nav">
+            <button data-calculator="loan" class="active">Loan Calculator</button>
+            <button data-calculator="compound">Compound Interest</button>
+            <button data-calculator="investment">Investment Growth</button>
+            <button data-calculator="mortgage">Mortgage</button>
+            <button data-calculator="retirement">Retirement</button>
+        </div>
+        
+        <!-- Loan Calculator -->
+        <div id="loan" class="calculator-section active">
+            <div class="input-group">
+                <label for="loan-amount">Loan Amount (₹)</label>
+                <input type="number" id="loan-amount" placeholder="e.g., 10000" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="loan-term">Loan Term (years)</label>
+                <input type="number" id="loan-term" placeholder="e.g., 5" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="loan-rate">Interest Rate (% per year)</label>
+                <input type="number" id="loan-rate" placeholder="e.g., 5.5" step="0.01" min="0">
+            </div>
+            
+            <button class="calculate" id="calculate-loan">Calculate</button>
+            
+            <div class="result" id="loan-result" style="display: none;">
+                <div class="result-title">Monthly Payment</div>
+                <div class="result-value" id="loan-payment"></div>
+                
+                <div class="result-details">
+                    <p>Total Payments: <span id="loan-total"></span></p>
+                    <p>Total Interest: <span id="loan-interest"></span></p>
+                </div>
+                
+                <!-- <table id="loan-schedule">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>Remaining</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table> -->
+            </div>
+        </div>
+        
+        <!-- Compound Interest Calculator -->
+        <div id="compound" class="calculator-section">
+            <div class="input-group">
+                <label for="compound-principal">Initial Investment (₹)</label>
+                <input type="number" id="compound-principal" placeholder="e.g., 1000" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="compound-contribution">Additional Contribution (₹)</label>
+                <input type="number" id="compound-contribution" placeholder="e.g., 100" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="compound-frequency">Contribution Frequency</label>
+                <select id="compound-frequency">
+                    <option value="12">Monthly</option>
+                    <option value="4">Quarterly</option>
+                    <option value="1">Annually</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="compound-rate">Annual Interest Rate (%)</label>
+                <input type="number" id="compound-rate" placeholder="e.g., 7" step="0.01" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="compound-years">Time Period (years)</label>
+                <input type="number" id="compound-years" placeholder="e.g., 10" min="0">
+            </div>
+            
+            <button class="calculate" id="calculate-compound">Calculate</button>
+            
+            <div class="result" id="compound-result" style="display: none;">
+                <div class="result-title">Final Balance</div>
+                <div class="result-value" id="compound-final"></div>
+                
+                <div class="result-details">
+                    <p>Total Principal: <span id="compound-total-principal"></span></p>
+                    <p>Total Interest: <span id="compound-total-interest"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Investment Growth Calculator -->
+        <div id="investment" class="calculator-section">
+            <div class="input-group">
+                <label for="invest-initial">Initial Investment (₹)</label>
+                <input type="number" id="invest-initial" placeholder="e.g., 10000" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="invest-monthly">Monthly Contribution (₹)</label>
+                <input type="number" id="invest-monthly" placeholder="e.g., 500" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="invest-return">Expected Annual Return (%)</label>
+                <input type="number" id="invest-return" placeholder="e.g., 8" step="0.1" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="invest-inflation">Expected Inflation Rate (%)</label>
+                <input type="number" id="invest-inflation" placeholder="e.g., 2.5" step="0.1" min="0">
+                <div class="helper-text">Optional - to calculate growth in today's dollars</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="invest-years">Investment Period (years)</label>
+                <input type="number" id="invest-years" placeholder="e.g., 20" min="0">
+            </div>
+            
+            <button class="calculate" id="calculate-investment">Calculate</button>
+            
+            <div class="result" id="investment-result" style="display: none;">
+                <div class="result-title">Final Investment Value</div>
+                <div class="result-value" id="investment-final"></div>
+                
+                <div class="result-details">
+                    <p>Total Contributions: <span id="investment-contributions"></span></p>
+                    <p>Total Growth: <span id="investment-growth"></span></p>
+                    <p>Inflation-Adjusted Value: <span id="investment-adjusted"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mortgage Calculator -->
+        <div id="mortgage" class="calculator-section">
+            <div class="input-group">
+                <label for="mortgage-price">Home Price (₹)</label>
+                <input type="number" id="mortgage-price" placeholder="e.g., 300000" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="mortgage-down">Down Payment (₹)</label>
+                <input type="number" id="mortgage-down" placeholder="e.g., 60000" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="mortgage-term">Loan Term (years)</label>
+                <select id="mortgage-term">
+                    <option value="30">30 Years</option>
+                    <option value="20">20 Years</option>
+                    <option value="15">15 Years</option>
+                    <option value="10">10 Years</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="mortgage-rate">Interest Rate (% per year)</label>
+                <input type="number" id="mortgage-rate" placeholder="e.g., 4.5" step="0.01" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="mortgage-tax">Property Tax (₹ per year)</label>
+                <input type="number" id="mortgage-tax" placeholder="e.g., 2400" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="mortgage-insurance">Home Insurance (₹ per year)</label>
+                <input type="number" id="mortgage-insurance" placeholder="e.g., 1200" min="0">
+            </div>
+            
+            <button class="calculate" id="calculate-mortgage">Calculate</button>
+            
+            <div class="result" id="mortgage-result" style="display: none;">
+                <div class="result-title">Monthly Payment</div>
+                <div class="result-value" id="mortgage-payment"></div>
+                
+                <div class="result-details">
+                    <p>Principal & Interest: <span id="mortgage-principal-interest"></span></p>
+                    <p>Property Tax: <span id="mortgage-monthly-tax"></span></p>
+                    <p>Home Insurance: <span id="mortgage-monthly-insurance"></span></p>
+                    <p>Total Loan Amount: <span id="mortgage-loan-amount"></span></p>
+                    <p>Total Interest: <span id="mortgage-total-interest"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Retirement Calculator -->
+        <div id="retirement" class="calculator-section">
+            <div class="input-group">
+                <label for="retirement-age">Current Age</label>
+                <input type="number" id="retirement-age" placeholder="e.g., 35" min="0" max="120">
+            </div>
+            
+            <div class="input-group">
+                <label for="retirement-target-age">Retirement Age</label>
+                <input type="number" id="retirement-target-age" placeholder="e.g., 65" min="0" max="120">
+            </div>
+            
+            <div class="input-group">
+                <label for="retirement-current">Current Savings (₹)</label>
+                <input type="number" id="retirement-current" placeholder="e.g., 50000" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="retirement-monthly">Monthly Contributions (₹)</label>
+                <input type="number" id="retirement-monthly" placeholder="e.g., 500" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="retirement-return">Expected Annual Return (%)</label>
+                <input type="number" id="retirement-return" placeholder="e.g., 7" step="0.1" min="0">
+            </div>
+            
+           <div class="input-group">
+                <label for="retirement-years">Years in Retirement</label>
+                <input type="number" id="retirement-years" placeholder="e.g., 30" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="retirement-inflation">Expected Inflation (%)</label>
+                <input type="number" id="retirement-inflation" placeholder="e.g., 2.5" step="0.1" min="0">
+            </div>
+            
+            <button class="calculate" id="calculate-retirement">Calculate</button>
+            
+            <div class="result" id="retirement-result" style="display: none;">
+                <div class="result-title">Retirement Savings Projection</div>
+                <div class="result-value" id="retirement-savings"></div>
+                
+                <div class="result-details">
+                    <p>Years until retirement: <span id="retirement-years-until"></span></p>
+                    <p>Total contributions: <span id="retirement-total-contributions"></span></p>
+                    <p>Projected monthly income: <span id="retirement-monthly-income"></span></p>
+                    <p>Savings goal: <span id="retirement-goal"></span></p>
+                    <p>Shortfall/Surplus: <span id="retirement-shortfall"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>document.addEventListener('DOMContentLoaded', function() {
+        // Navigation between calculators
+        const navButtons = document.querySelectorAll('.calculator-nav button');
+        const calculatorSections = document.querySelectorAll('.calculator-section');
+        
+        navButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const calculatorId = this.getAttribute('data-calculator');
+                
+                // Update active button
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show selected calculator
+                calculatorSections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === calculatorId) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+        });
+        
+        // Loan Calculator
+        document.getElementById('calculate-loan').addEventListener('click', function() {
+            const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+            const loanTerm = parseFloat(document.getElementById('loan-term').value);
+            const interestRate = parseFloat(document.getElementById('loan-rate').value) / 100;
+            
+            if (isNaN(loanAmount) || isNaN(loanTerm) || isNaN(interestRate)) {
+                alert('Please enter valid numbers for all fields');
+                return;
+            }
+            
+            // Calculate monthly payment
+            const monthlyRate = interestRate / 12;
+            const totalPayments = loanTerm * 12;
+            const monthlyPayment = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) / 
+                                  (Math.pow(1 + monthlyRate, totalPayments) - 1);
+            
+            const totalPaid = monthlyPayment * totalPayments;
+            const totalInterest = totalPaid - loanAmount;
+            
+            // Display results
+            document.getElementById('loan-payment').textContent = formatCurrency(monthlyPayment);
+            document.getElementById('loan-total').textContent = formatCurrency(totalPaid);
+            document.getElementById('loan-interest').textContent = formatCurrency(totalInterest);
+            document.getElementById('loan-result').style.display = 'block';
+            
+            // Generate amortization schedule
+            const tableBody = document.querySelector('#loan-schedule tbody');
+            tableBody.innerHTML = '';
+            
+            let remainingBalance = loanAmount;
+            let yearlyPrincipal = 0;
+            let yearlyInterest = 0;
+            
+            for (let month = 1; month <= totalPayments; month++) {
+                const interestPayment = remainingBalance * monthlyRate;
+                const principalPayment = monthlyPayment - interestPayment;
+                
+                yearlyPrincipal += principalPayment;
+                yearlyInterest += interestPayment;
+                
+                remainingBalance -= principalPayment;
+                
+                if (month % 12 === 0 || month === totalPayments) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>Year ₹{Math.ceil(month / 12)}</td>
+                        <td>₹{formatCurrency(yearlyPrincipal)}</td>
+                        <td>₹{formatCurrency(yearlyInterest)}</td>
+                        <td>₹{formatCurrency(remainingBalance)}</td>
+                    `;
+                    tableBody.appendChild(row);
+                    
+                    yearlyPrincipal = 0;
+                    yearlyInterest = 0;
+                }
+            }
+        });
+        
+        // Compound Interest Calculator
+        document.getElementById('calculate-compound').addEventListener('click', function() {
+            const principal = parseFloat(document.getElementById('compound-principal').value);
+            const additionalContribution = parseFloat(document.getElementById('compound-contribution').value);
+            const frequency = parseInt(document.getElementById('compound-frequency').value);
+            const rate = parseFloat(document.getElementById('compound-rate').value) / 100;
+            const years = parseFloat(document.getElementById('compound-years').value);
+            
+            if (isNaN(principal) || isNaN(rate) || isNaN(years)) {
+                alert('Please enter valid numbers for all required fields');
+                return;
+            }
+            
+            // Calculate compound interest with regular contributions
+            const periodicRate = rate / frequency;
+            const totalPeriods = frequency * years;
+            
+            let finalBalance = principal;
+            let totalContributions = principal;
+            
+            for (let i = 0; i < totalPeriods; i++) {
+                finalBalance *= (1 + periodicRate);
+                
+                if (!isNaN(additionalContribution) && additionalContribution > 0) {
+                    finalBalance += additionalContribution;
+                    totalContributions += additionalContribution;
+                }
+            }
+            
+            // Display results
+            document.getElementById('compound-final').textContent = formatCurrency(finalBalance);
+            document.getElementById('compound-total-principal').textContent = formatCurrency(totalContributions);
+            document.getElementById('compound-total-interest').textContent = formatCurrency(finalBalance - totalContributions);
+            document.getElementById('compound-result').style.display = 'block';
+        });
+        
+        // Investment Growth Calculator
+        document.getElementById('calculate-investment').addEventListener('click', function() {
+            const initialInvestment = parseFloat(document.getElementById('invest-initial').value);
+            const monthlyContribution = parseFloat(document.getElementById('invest-monthly').value);
+            const annualReturn = parseFloat(document.getElementById('invest-return').value) / 100;
+            const inflationRate = parseFloat(document.getElementById('invest-inflation').value) / 100;
+            const years = parseFloat(document.getElementById('invest-years').value);
+            
+            if (isNaN(initialInvestment) || isNaN(annualReturn) || isNaN(years)) {
+                alert('Please enter valid numbers for all required fields');
+                return;
+            }
+            
+            // Calculate investment growth
+            const monthlyReturn = Math.pow(1 + annualReturn, 1/12) - 1;
+            const totalMonths = years * 12;
+            
+            let balance = initialInvestment;
+            let totalContributions = initialInvestment;
+            
+            for (let i = 0; i < totalMonths; i++) {
+                balance *= (1 + monthlyReturn);
+                
+                if (!isNaN(monthlyContribution) && monthlyContribution > 0) {
+                    balance += monthlyContribution;
+                    totalContributions += monthlyContribution;
+                }
+            }
+            
+            // Calculate inflation-adjusted value
+            let inflationAdjustedValue = balance;
+            if (!isNaN(inflationRate) && inflationRate > 0) {
+                inflationAdjustedValue /= Math.pow(1 + inflationRate, years);
+            }
+            
+            // Display results
+            document.getElementById('investment-final').textContent = formatCurrency(balance);
+            document.getElementById('investment-contributions').textContent = formatCurrency(totalContributions);
+            document.getElementById('investment-growth').textContent = formatCurrency(balance - totalContributions);
+            document.getElementById('investment-adjusted').textContent = formatCurrency(inflationAdjustedValue);
+            document.getElementById('investment-result').style.display = 'block';
+        });
+        
+        // Mortgage Calculator
+        document.getElementById('calculate-mortgage').addEventListener('click', function() {
+            const homePrice = parseFloat(document.getElementById('mortgage-price').value);
+            const downPayment = parseFloat(document.getElementById('mortgage-down').value);
+            const loanTerm = parseInt(document.getElementById('mortgage-term').value);
+            const interestRate = parseFloat(document.getElementById('mortgage-rate').value) / 100;
+            const propertyTax = parseFloat(document.getElementById('mortgage-tax').value);
+            const homeInsurance = parseFloat(document.getElementById('mortgage-insurance').value);
+            
+            if (isNaN(homePrice) || isNaN(interestRate) || isNaN(loanTerm)) {
+                alert('Please enter valid numbers for all required fields');
+                return;
+            }
+            
+            // Calculate mortgage payment
+            const loanAmount = homePrice - (isNaN(downPayment) ? 0 : downPayment);
+            const monthlyRate = interestRate / 12;
+            const totalPayments = loanTerm * 12;
+            
+            const monthlyPrincipalInterest = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) / 
+                                           (Math.pow(1 + monthlyRate, totalPayments) - 1);
+            
+            const monthlyTax = (isNaN(propertyTax) ? 0 : propertyTax) / 12;
+            const monthlyInsurance = (isNaN(homeInsurance) ? 0 : homeInsurance) / 12;
+            const totalMonthlyPayment = monthlyPrincipalInterest + monthlyTax + monthlyInsurance;
+            
+            const totalPaid = monthlyPrincipalInterest * totalPayments;
+            const totalInterest = totalPaid - loanAmount;
+            
+            // Display results
+            document.getElementById('mortgage-payment').textContent = formatCurrency(totalMonthlyPayment);
+            document.getElementById('mortgage-principal-interest').textContent = formatCurrency(monthlyPrincipalInterest);
+            document.getElementById('mortgage-monthly-tax').textContent = formatCurrency(monthlyTax);
+            document.getElementById('mortgage-monthly-insurance').textContent = formatCurrency(monthlyInsurance);
+            document.getElementById('mortgage-loan-amount').textContent = formatCurrency(loanAmount);
+            document.getElementById('mortgage-total-interest').textContent = formatCurrency(totalInterest);
+            document.getElementById('mortgage-result').style.display = 'block';
+        });
+        
+        // Retirement Calculator
+        document.getElementById('calculate-retirement').addEventListener('click', function() {
+            const currentAge = parseInt(document.getElementById('retirement-age').value);
+            const retirementAge = parseInt(document.getElementById('retirement-target-age').value);
+            const currentSavings = parseFloat(document.getElementById('retirement-current').value);
+            const monthlyContribution = parseFloat(document.getElementById('retirement-monthly').value);
+            const annualReturn = parseFloat(document.getElementById('retirement-return').value) / 100;
+            const desiredIncome = parseFloat(document.getElementById('retirement-income').value);
+            const yearsInRetirement = parseInt(document.getElementById('retirement-years').value);
+            const inflationRate = parseFloat(document.getElementById('retirement-inflation').value) / 100;
+            
+            if (isNaN(currentAge) || isNaN(retirementAge) || isNaN(annualReturn) || 
+                isNaN(desiredIncome) || isNaN(yearsInRetirement)) {
+                alert('Please enter valid numbers for all required fields');
+                return;
+            }
+            
+            // Years until retirement
+            const yearsUntilRetirement = retirementAge - currentAge;
+            
+            // Calculate future value of current savings
+            const monthlyReturn = Math.pow(1 + annualReturn, 1/12) - 1;
+            const totalMonths = yearsUntilRetirement * 12;
+            
+            let projectedSavings = currentSavings;
+            let totalContributions = currentSavings;
+            
+            for (let i = 0; i < totalMonths; i++) {
+                projectedSavings *= (1 + monthlyReturn);
+                
+                if (!isNaN(monthlyContribution) && monthlyContribution > 0) {
+                    projectedSavings += monthlyContribution;
+                    totalContributions += monthlyContribution;
+                }
+            }
+            
+            // Calculate retirement income needs adjusted for inflation
+    
+            
+            const inflationAdjustedIncome = desiredIncome * Math.pow(1 + inflationRate, yearsUntilRetirement);
+            
+            // Calculate how much is needed to sustain retirement
+            // Using 4% withdrawal rule as a simple approximation
+            const savingsNeeded = inflationAdjustedIncome / 0.04;
+            
+            // Calculate shortfall or surplus
+            const shortfall = projectedSavings - savingsNeeded;
+            
+            // Display results
+            document.getElementById('retirement-savings').textContent = formatCurrency(projectedSavings);
+            document.getElementById('retirement-years-until').textContent = yearsUntilRetirement;
+            document.getElementById('retirement-total-contributions').textContent = formatCurrency(totalContributions);
+            document.getElementById('retirement-monthly-income').textContent = formatCurrency(inflationAdjustedIncome / 12);
+            document.getElementById('retirement-goal').textContent = formatCurrency(savingsNeeded);
+            document.getElementById('retirement-shortfall').textContent = formatCurrency(shortfall);
+            document.getElementById('retirement-result').style.display = 'block';
+        });
+        
+        // Helper function to format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-IN', { 
+                style: 'currency', 
+                currency: 'INR',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(amount);
+        }
+        
+    });</script>
+</body>
+</html>

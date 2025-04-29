@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - FundTogether</title>
+    <link rel="stylesheet" href="../styles/crowd.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-hand-holding-heart"></i>
+            <h1>FundTogether</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="crowd.html">Home</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <section class="donation-form">
+        <h2 class="section-title animate-text">Make a Difference Today</h2>
+        
+        <div class="form-container">
+            <div class="form-section">
+                <h3>Select an Organization</h3>
+                <div class="radio-options">
+                    <label class="radio-label">
+                        <input type="radio" name="organization" value="charity-a" checked>
+                        <span class="radio-custom"></span>
+                        Charity A
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="organization" value="charity-b">
+                        <span class="radio-custom"></span>
+                        Charity B
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="organization" value="charity-c">
+                        <span class="radio-custom"></span>
+                        Charity C
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Choose a Donation Amount</h3>
+                <div class="amount-options">
+                    <label class="amount-label">
+                        <input type="radio" name="amount" value="10" checked>
+                        <span class="amount-custom">$10</span>
+                    </label>
+                    <label class="amount-label">
+                        <input type="radio" name="amount" value="25">
+                        <span class="amount-custom">$25</span>
+                    </label>
+                    <label class="amount-label">
+                        <input type="radio" name="amount" value="50">
+                        <span class="amount-custom">$50</span>
+                    </label>
+                    <label class="amount-label">
+                        <input type="radio" name="amount" value="100">
+                        <span class="amount-custom">$100</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Payment Method</h3>
+                <div class="payment-options">
+                    <label class="radio-label">
+                        <input type="radio" name="payment" value="credit-card" checked>
+                        <span class="radio-custom"></span>
+                        Credit Card
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="payment" value="paypal">
+                        <span class="radio-custom"></span>
+                        PayPal
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button id="donateBtn" class="donate-button animate-pulse">Proceed to Donate</button>
+                <div class="progress-container">
+                    <p>Progress:</p>
+                    <div class="progress-bar">
+                        <div class="progress animate-progress" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login to FundTogether</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="primary-button">Login</button>
+                <p>Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
+            </form>
+            <form id="signupForm" style="display: none;">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <button type="submit" class="primary-button">Sign Up</button>
+                <p>Already have an account? <a href="#" id="loginLink">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Donation Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Thank You for Your Donation!</h2>
+            <p>Your contribution will make a real difference.</p>
+            <p>A receipt has been sent to your email.</p>
+            <button class="primary-button" id="closeSuccessBtn">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 FundTogether. All rights reserved.</p>
+    </footer>
+
+    <script src="firebase-config.js"></script>
+    <script src="../scripts/crowd.js"></script>
+    <script src="../scripts/donate.js"></script>
+</body>
+</html>

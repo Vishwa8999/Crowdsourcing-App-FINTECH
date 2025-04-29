@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIBIL Score Calculator with Banking Verification</title>
+    <link rel="stylesheet" href="../styles/cibil.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CIBIL Score Calculator</h1>
+            <p class="subtitle">Check your creditworthiness with banking verification</p>
+        </header>
+
+        <div class="steps-container">
+            <div class="step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-text">Personal Info</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-text">Credit Details</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-text">Bank Verification</div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-text">Results</div>
+            </div>
+        </div>
+
+        <!-- Step 1: Personal Information -->
+        <div class="card" id="step1">
+            <h2>Personal Information</h2>
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob">
+            </div>
+            <div class="form-group">
+                <label for="pan">PAN Number</label>
+                <input type="text" id="pan" placeholder="ABCDE1234F" maxlength="10">
+                <div class="input-hint">10-character alphanumeric PAN</div>
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input type="tel" id="mobile" placeholder="Enter 10-digit mobile number" maxlength="10">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="your@email.com">
+            </div>
+            <div class="button-container">
+                <button class="btn next-btn" data-next="2">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Credit Details -->
+        <div class="card hidden" id="step2">
+            <h2>Credit Details</h2>
+            <div class="form-group">
+                <label for="existing-loans">Number of Existing Loans</label>
+                <div class="range-container">
+                    <input type="range" id="existing-loans" min="0" max="10" value="0" class="slider">
+                    <span class="range-value" id="existing-loans-value">0</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="credit-cards">Number of Credit Cards</label>
+                <div class="range-container">
+                    <input type="range" id="credit-cards" min="0" max="10" value="0" class="slider">
+                    <span class="range-value" id="credit-cards-value">0</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="credit-utilization">Credit Utilization (%)</label>
+                <div class="range-container">
+                    <input type="range" id="credit-utilization" min="0" max="100" value="30" class="slider">
+                    <span class="range-value" id="credit-utilization-value">30%</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="payment-history">On-time Payment History (%)</label>
+                <div class="range-container">
+                    <input type="range" id="payment-history" min="0" max="100" value="100" class="slider">
+                    <span class="range-value" id="payment-history-value">100%</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="credit-age">Average Credit Age (years)</label>
+                <div class="range-container">
+                    <input type="range" id="credit-age" min="0" max="20" value="2" class="slider">
+                    <span class="range-value" id="credit-age-value">2</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="hard-inquiries">Recent Hard Inquiries (last 2 years)</label>
+                <div class="range-container">
+                    <input type="range" id="hard-inquiries" min="0" max="10" value="0" class="slider">
+                    <span class="range-value" id="hard-inquiries-value">0</span>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="btn back-btn" data-back="1">Back</button>
+                <button class="btn next-btn" data-next="3">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Bank Verification -->
+        <div class="card hidden" id="step3">
+            <h2>Bank Account Verification</h2>
+            <p class="verification-info">Verify your banking details to improve the accuracy of your CIBIL score calculation.</p>
+            
+            <div class="bank-selection">
+                <label for="bank-select">Select Your Bank</label>
+                <select id="bank-select">
+                    <option value="">-- Select Bank --</option>
+                    <option value="sbi">State Bank of India</option>
+                    <option value="hdfc">HDFC Bank</option>
+                    <option value="icici">ICICI Bank</option>
+                    <option value="axis">Axis Bank</option>
+                    <option value="pnb">Punjab National Bank</option>
+                    <option value="bob">Bank of Baroda</option>
+                    <option value="kotak">Kotak Mahindra Bank</option>
+                    <option value="yes">Yes Bank</option>
+                </select>
+            </div>
+            
+            <div class="bank-login hidden" id="bank-login-form">
+                <div class="bank-header" id="bank-header">
+                    <img id="bank-logo" src="/placeholder.svg" alt="Bank Logo">
+                    <span id="bank-name">Bank Name</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="account-number">Account Number</label>
+                    <input type="text" id="account-number" placeholder="Enter your account number">
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer-id">Customer ID / User ID</label>
+                    <input type="text" id="customer-id" placeholder="Enter your customer ID">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bank-password">Password / PIN</label>
+                    <div class="password-container">
+                        <input type="password" id="bank-password" placeholder="Enter your password">
+                        <button type="button" class="toggle-password" id="toggle-password">
+                            <span class="eye-icon">👁️</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="consent-checkbox">
+                    <input type="checkbox" id="consent">
+                    <label for="consent">I authorize this application to securely access my banking information for the purpose of CIBIL score calculation only.</label>
+                </div>
+            </div>
+            
+            <div class="verification-status hidden" id="verification-status">
+                <div class="loader"></div>
+                <p id="verification-message">Connecting to bank...</p>
+            </div>
+            
+            <div class="button-container">
+                <button class="btn back-btn" data-back="2">Back</button>
+                <button class="btn next-btn" id="verify-btn" disabled>Verify & Continue</button>
+                <button class="btn skip-btn" data-next="4">Skip Verification</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Results -->
+        <div class="card hidden" id="step4">
+            <h2>Your CIBIL Score Result</h2>
+            
+            <div class="score-container">
+                <div class="score-meter">
+                    <div class="score-gauge">
+                        <div class="score-needle" id="score-needle"></div>
+                    </div>
+                    <div class="score-value" id="final-score">---</div>
+                </div>
+                
+                <div class="score-label" id="score-category">Calculating...</div>
+            </div>
+            
+            <div class="score-breakdown">
+                <h3>Score Breakdown</h3>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">Payment History (35%)</div>
+                    <div class="breakdown-bar">
+                        <div class="breakdown-progress" id="payment-breakdown"></div>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">Credit Utilization (30%)</div>
+                    <div class="breakdown-bar">
+                        <div class="breakdown-progress" id="utilization-breakdown"></div>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">Credit Age (15%)</div>
+                    <div class="breakdown-bar">
+                        <div class="breakdown-progress" id="age-breakdown"></div>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">Credit Mix (10%)</div>
+                    <div class="breakdown-bar">
+                        <div class="breakdown-progress" id="mix-breakdown"></div>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">Hard Inquiries (10%)</div>
+                    <div class="breakdown-bar">
+                        <div class="breakdown-progress" id="inquiry-breakdown"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="verification-badge" id="verification-badge">
+                <div class="badge-icon">✓</div>
+                <div class="badge-text">Bank Verified</div>
+            </div>
+            
+            <div class="recommendations" id="recommendations">
+                <h3>Recommendations to Improve Your Score</h3>
+                <ul id="recommendation-list">
+                    <!-- Recommendations will be added here -->
+                </ul>
+            </div>
+            
+            <div class="button-container">
+                <button class="btn back-btn" data-back="3">Back</button>
+                <button class="btn" id="recalculate-btn">Recalculate</button>
+                <button class="btn primary-btn" id="download-report-btn">Download Report</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/cibil.js"></script>
+</body>
+</html>
